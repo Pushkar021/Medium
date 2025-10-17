@@ -1,1 +1,16 @@
 @import "tailwindcss";
+/* In your CSS file or <style> block */
+*:focus {
+  outline: none; /* Removes the default outline */
+}
+
+/* Or, more specifically for your div, though usually not needed */
+.min-h-screen:focus {
+  outline: none;
+}
+/* Global CSS reset */
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

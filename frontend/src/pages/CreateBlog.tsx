@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Appbar } from "../Components/Appbar";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
 const backendUrl = import.meta.env.VITE_DATABASE_URL;
 export const CreateBlog: React.FC = () => {
   const [title, setTitle] = useState("");

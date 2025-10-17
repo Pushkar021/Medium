@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 const backendUrl = import.meta.env.VITE_DATABASE_URL;
 
@@ -8,15 +7,15 @@ interface Blogprops {
   title: string;
   content: string;
   date: string;
-  id: string;
-  imagelink: string;
+  id: string|number;
+  imagelink?: string;
 }
 
 export const BlogComponent = ({
-  name,
+
   title,
   content,
-  date,
+  
   id,
   imagelink,
 }: Blogprops) => {
@@ -86,16 +85,5 @@ if(x){
   );
 };
 
-interface AvatarProps {
-  name: string;
-}
 
-function Avatar({ name }: AvatarProps) {
-  return (
-    <div className="w-6 h-6 flex items-center justify-center bg-gray-200 rounded-full">
-      <span className="text-gray-800 font-bold text-xs">
-        {name.charAt(0).toUpperCase()}
-      </span>
-    </div>
-  );
-}
+

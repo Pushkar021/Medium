@@ -8,6 +8,7 @@ import { CreateBlog } from "./pages/CreateBlog";
 import { User } from "./pages/User";
 import { EditBlog } from "./pages/EditBlog";
 import { Xyz } from "./pages/Xyz";
+import {Home} from "./pages/Home";
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/user" element={<User />} />
           <Route path="user/edit/:id" element={<EditBlog />} />
           <Route path="xyz" element={<Xyz />} />
+         <Route path="/*" element={<Home/>}/> 
         </Routes>
     </BrowserRouter>
   );

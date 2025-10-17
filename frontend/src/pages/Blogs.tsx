@@ -1,23 +1,32 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BlogComponent } from "../Components/BlogComponent";
 import { useBlogs, useDebounce } from "../hooks/index";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import { Link, useNavigate } from "react-router-dom";
 import { Appbar } from "../Components/Appbar";
 import toast, { Toaster } from "react-hot-toast";
+import {motion} from "framer-motion"
 
 
 export const Blogs = () => {
   const navigate = useNavigate()
   const { loading, blogs } = useBlogs();
   const [search, setSearch] = useState("");
-  const debouncedSearch = useDebounce(search);
+  const debouncedSearch = useDebounce(search || null);
 const picture = localStorage.getItem("picture")
   const name = localStorage.getItem("Name") || "User"; // Replace with actual user name logic
 
 interface AvatarProps {
   name: string | null;
   picture: string | null;
+}
+interface Blog {
+  id: string;
+  autherName?: string;
+  title?: string;
+  content?: string;
+  createdAt?: string;
+  imagelink?: string;
 }
 
 function Avatar({ name, picture }: AvatarProps) {
@@ -76,8 +85,8 @@ if(!localStorage.getItem("token")){
     );
   }
 
-  const featured = blogs[0];
-  const featured2 = blogs[1];
+  const featured = blogs[0] as Blog;
+  const featured2 = blogs[1] as Blog;
   const others = blogs.slice(2);
 
   return (
@@ -85,7 +94,7 @@ if(!localStorage.getItem("token")){
       {/* Inline Appbar */}
       <div className="flex justify-between items-center p-2 shadow-md bg-white dark:bg-gray-900">
         {/* Logo */}
-       
+
         <div className="ml-5 font-bold text-lg text-gray-900 dark:text-white">
           Medium
         </div>
@@ -116,71 +125,99 @@ if(!localStorage.getItem("token")){
         </div>
       </div>
 
-      {/* Blogs layout */}
-      <div className="flex flex-col md:flex-row pt-5 px-4 md:px-10 gap-6">
-        {/* Search Results or Featured Layout */}
-        {debouncedSearch &&
-        debouncedSearch.message &&
-        debouncedSearch.message.length > 0 &&
-        search != "" ? (
-          <div className="w-full">
-            {/* Display debounced filtered results */}
-            {debouncedSearch.message.map((b, i) => (
-              <BlogComponent
-                key={b.id || i}
-                id={b.id}
-                name={b.autherName || "Unknown"}
-                title={b.title || "Untitled"}
-                content={b.content || ""}
-                date={b.createdAt || "Unknown date"}
-                imagelink={b.imagelink}
-              />
-            ))}
-          </div>
-        ) : (
-          <>
-            {/* Left side - Featured Blogs */}
-            <div className="md:w-1/2">
-              <BlogComponent
-                id={featured.id}
-                name={featured.autherName || "Unknown"}
-                title={featured.title || "Untitled"}
-                content={featured.content || ""}
-                date={featured.createdAt || "Unknown date"}
-                imagelink={featured.imagelink}
-                variant="vertical"
-                
-              />
-              <BlogComponent
-                id={featured2.id}
-                name={featured2.autherName || "Unknown"}
-                title={featured2.title || "Untitled"}
-                content={featured2.content || ""}
-                date={featured2.createdAt || "Unknown date"}
-                imagelink={featured2.imagelink}
-                variant="vertical"
-              />
+      <motion.main
+        className=""
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.1 }}
+      >
+        {/* Blogs layout */}
+        <div className="flex flex-col md:flex-row pt-5 px-4 md:px-10 gap-6">
+          {/* Search Results or Featured Layout */}
+          {debouncedSearch &&
+          debouncedSearch.message &&
+          debouncedSearch.message.length > 0 &&
+          search != "" ? (
+            <div className="w-full">
+              {/* Display debounced filtered results */}
+              {debouncedSearch.message.map(
+                (
+                  b: {
+                    id: string;
+                    autherName?: string;
+                    title?: string;
+                    content?: string;
+                    createdAt?: string;
+                    imagelink?: string;
+                  },
+                  i: number
+                ) => (
+                  <BlogComponent
+                    key={b.id || i}
+                    id={b.id}
+                    name={b.autherName || "Unknown"}
+                    title={b.title || "Untitled"}
+                    content={b.content || ""}
+                    date={b.createdAt || "Unknown date"}
+                    imagelink={b.imagelink}
+                  />
+                )
+              )}
             </div>
-
-            {/* Right side - Other Blogs */}
-            <div className="md:w-1/2 flex flex-col ">
-             
-              {others.map((x, index) => (
+          ) : (
+            <>
+              {/* Left side - Featured Blogs */}
+              <div className="md:w-1/2">
                 <BlogComponent
-                  key={x.id || index}
-                  id={x.id || index}
-                  name={x.autherName || "Unknown"}
-                  title={x.title || "Untitled"}
-                  content={x.content || ""}
-                  date={x.createdAt || "Unknown date"}
-                  imagelink={x.imagelink}
+                  id={featured.id}
+                  name={featured.autherName || "Unknown"}
+                  title={featured.title || "Untitled"}
+                  content={featured.content || ""}
+                  date={featured.createdAt || "Unknown date"}
+                  imagelink={featured.imagelink}
+                  variant="vertical"
                 />
-              ))}
-              
-            </div>
-          </>
-        )}
-      </div>
+                <BlogComponent
+                  id={featured2.id}
+                  name={featured2.autherName || "Unknown"}
+                  title={featured2.title || "Untitled"}
+                  content={featured2.content || ""}
+                  date={featured2.createdAt || "Unknown date"}
+                  imagelink={featured2.imagelink}
+                  variant="vertical"
+                />
+              </div>
+
+              {/* Right side - Other Blogs */}
+              <div className="md:w-1/2 flex flex-col ">
+                {others.map(
+                  (
+                    x: {
+                      id: string|number;
+                      autherName?: string;
+                      title?: string;
+                      content?: string;
+                      createdAt?: string;
+                      imagelink?: string;
+                    },
+                    index
+                  ) => (
+                    <BlogComponent
+                      key={x.id || index}
+                      id={x.id || index}
+                      name={x.autherName || "Unknown"}
+                      title={x.title || "Untitled"}
+                      content={x.content || ""}
+                      date={x.createdAt || "Unknown date"}
+                      imagelink={x.imagelink}
+                    />
+                  )
+                )}
+              </div>
+            </>
+          )}
+        </div>
+      </motion.main>
     </div>
   );
 };

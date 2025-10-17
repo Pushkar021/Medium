@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { Appbar } from "../Components/Appbar";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -17,9 +17,14 @@ export const EditBlog = () => {
   const blogs = blog?.getblog || []; // ✅ safer & shorter
 
   // ✅ Update state when blogs change
+  interface Blog{
+    title:string,
+    content:string,
+    imagelink:string
+  }
   useEffect(() => {
     if (blogs.length > 0) {
-      const blogPost = blogs[0];
+      const blogPost = blogs[0] as Blog;
       setTitle(blogPost.title || "");
       setContent(blogPost.content || "");
       setImageLink(blogPost.imagelink || "");

@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
-import dotenv from "dotenv"
 
 interface Blogprops {
   name: string;
   title: string;
   content: string;
   date: string;
-  id: string;
-  imagelink: string;
+  id: string | number;
+  imagelink?: string;
   variant?: "default" | "compact" | "vertical"; // Added vertical for featured
 }
 

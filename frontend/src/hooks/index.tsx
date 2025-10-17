@@ -3,12 +3,7 @@ import axios from "axios";
 
 const backendUrl = import.meta.env.VITE_DATABASE_URL;
 
-interface Blog {
-  autherName: string;
-  title: string;
-  content: string;
-  createdAt: string;
-}
+
 
 
   //extra done by me on 11/8
@@ -51,7 +46,7 @@ export const useUserBlog = ()=>{
           setBlogs(res.data.data || []);
           setLoading(false);
         })
-        .catch((err) => {
+        .catch(() => {
           setLoading(false);
         });
     }, []);
@@ -77,7 +72,7 @@ export const useBlogs = () => {
         setBlogs(res.data.blogs || [])
         setLoading(false);
       })
-      .catch((err) => {
+      .catch(() => {
         setLoading(false);
       });
   }, []);
@@ -86,7 +81,7 @@ export const useBlogs = () => {
 };
 
 
-export const useDebounce = (cb: string) => {
+export const useDebounce = (cb:any) => {
   const [debouncedVal, setDebouncedVal] = useState(cb);
 
   useEffect(() => {
@@ -116,8 +111,5 @@ export const useDebounce = (cb: string) => {
 
 
 
-const getBlogItem = ({id}:{id:string})=>{
-const url = ""
-}
 
 
