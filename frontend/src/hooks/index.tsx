@@ -33,7 +33,7 @@ export const useUserBlog = ()=>{
 
     useEffect(() => {
       const url =
-        `${backendUrl}/api/v1/blog/test/myblog`;
+        `${backendUrl}/api/v1/blog/myblog`;
       const token = localStorage.getItem("token");
 
       axios
